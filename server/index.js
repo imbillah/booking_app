@@ -6,9 +6,11 @@ import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import userRoute from "./routes/users.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 dotenv.config();
 
 //To supress warning in terminal

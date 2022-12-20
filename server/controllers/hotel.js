@@ -1,5 +1,4 @@
 // creating controller for CRUD operation
-
 import Hotel from "../models/Hotel.js";
 
 // CREATE
@@ -49,6 +48,20 @@ export const getAllHotels = async (req, res, next) => {
   try {
     const allHotels = await Hotel.find();
     res.status(200).json(allHotels);
+  } catch (error) {
+    next(error);
+  }
+};
+// get hotels by City & Types
+export const countByCity = async (req, res, next) => {
+  const cities = req.query.cities.split(",");
+  try {
+    const cityList = await Promise.all(
+      cities.map((city) => {
+        return Hotel.countDocuments({ city: city });
+      })
+    );
+    res.status(200).json(cityList);
   } catch (error) {
     next(error);
   }

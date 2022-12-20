@@ -1,6 +1,10 @@
+import useFetch from "../../hooks/useFetch";
 import "./featured.css";
 
 const Featured = () => {
+  const fetchUrl = `${process.env.REACT_APP_SERVER_ROOT_URL}/hotels/countByCity?cities=rome,london,argon`;
+  const { data, loading, error, reFetch } = useFetch(fetchUrl);
+
   return (
     <div className="featured">
       <div className="featuredItem">
@@ -10,11 +14,11 @@ const Featured = () => {
           className="featuredImg"
         />
         <div className="featuredTitles">
-          <h1>Dublin</h1>
-          <h2>123 properties</h2>
+          <h1>Rome</h1>
+          <h2>{data[0]} Properties</h2>
         </div>
       </div>
-      
+
       <div className="featuredItem">
         <img
           src="https://cf.bstatic.com/xdata/images/city/max500/690334.webp?k=b99df435f06a15a1568ddd5f55d239507c0156985577681ab91274f917af6dbb&o="
@@ -22,8 +26,8 @@ const Featured = () => {
           className="featuredImg"
         />
         <div className="featuredTitles">
-          <h1>Reno</h1>
-          <h2>533 properties</h2>
+          <h1>London</h1>
+          <h2>{data[1]} Properties</h2>
         </div>
       </div>
       <div className="featuredItem">
@@ -33,8 +37,8 @@ const Featured = () => {
           className="featuredImg"
         />
         <div className="featuredTitles">
-          <h1>Austin</h1>
-          <h2>532 properties</h2>
+          <h1>Argon</h1>
+          <h2>{data[2]} Properties</h2>
         </div>
       </div>
     </div>

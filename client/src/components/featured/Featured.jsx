@@ -1,28 +1,15 @@
-import { useState } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
 import useFetch from "../../hooks/useFetch";
+import LoadingSpinner from "../../utils/LoadingSpinner";
 import "./featured.css";
 
 const Featured = () => {
-  let [color, setColor] = useState("#ffffff");
   const fetchUrl = `${process.env.REACT_APP_SERVER_ROOT_URL}/hotels/countByCity?cities=rome,london,argon`;
   const { data, loading, error, reFetch } = useFetch(fetchUrl);
-  const override = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "violet",
-  };
+
   return (
     <div className="featured">
       {loading ? (
-        <ClipLoader
-          color={color}
-          loading={loading}
-          cssOverride={override}
-          size={75}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <LoadingSpinner loading={loading} />
       ) : (
         <>
           <div className="featuredItem">

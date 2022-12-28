@@ -17,9 +17,9 @@ dotenv.config();
 mongoose.set("strictQuery", true);
 
 const port = process.env.PORT || 7000;
-const connect = async () => {
+const connect = () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL);
+    mongoose.connect(process.env.MONGO_URL);
     console.log("Mongo Server connected");
   } catch (error) {
     console.log(error.message);

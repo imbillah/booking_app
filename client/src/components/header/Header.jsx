@@ -13,7 +13,10 @@ import { useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { SearchContext } from "../../context/SearchContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const Header = ({ type }) => {
   const [destination, setDestination] = useState("");
@@ -33,7 +36,7 @@ const Header = ({ type }) => {
   });
 
   const navigate = useNavigate();
-
+  const { user } = useContext(AuthContext);
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -42,8 +45,10 @@ const Header = ({ type }) => {
       };
     });
   };
-
+  // grabing data from context API
+  const { dispatch } = useContext(SearchContext);
   const handleSearch = () => {
+    dispatch({ type: "NEW_SEARCH", payload: { destination, date, options } });
     navigate("/hotels", { state: { destination, date, options } });
   };
 
@@ -82,7 +87,12 @@ const Header = ({ type }) => {
               The joy of home anywhere in the world
             </h1>
             <p className="headerDesc">Easy booking, easy living</p>
-            <button className="headerBtn">Sign in / Register</button>
+            {!user && (
+              <Link to="/login">
+                <button className="headerBtn">Sign in / Register</button>
+              </Link>
+            )}
+
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />
